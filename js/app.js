@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     function createButtonForMachineDraw(){
     	const startDraw = document.createElement("button");
     	startDraw.classList.add("startDraw");
-    	body.insertBefore(startDraw, section);
+    	section.append(startDraw);
     	startDraw.textContent ="release the balls";
     	startDraw.addEventListener("click", machineDraw);
     	startDraw.addEventListener("click", compareArrays);
