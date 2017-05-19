@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             boardEls[i].textContent = number;
         }
     }
-    createNumberBoard(49); //ten for now, we are checking how to eliminate the same -done! :)
+    createNumberBoard(49); 
 
     const board = document.querySelector(".board");
     const boardEls = document.querySelectorAll(".boardEl");
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     
         for( let i =0; i<6; i++){
             const idx = Math.floor(Math.random() * numbers.length)
-            chosenByMachine.push(numbers[idx]);
+            chosenByMachine.push(parseInt(numbers[idx], 10));
             numbers.splice(idx,1);
 
         }
@@ -110,11 +110,12 @@ document.addEventListener("DOMContentLoaded", function(e){
         const arr2 = drawnNums;
             for(let i = 0; i<arr1.length; i++){
                 for(let j= 0; j<arr2.length; j++){
-                    if(arr1[i]===arr2[j]){
+                    if(arr1[i]===arr2[j]){ 
                         common.push(arr1[i]);
                     }
                 }
             }
+            console.log(arr1, arr2, common);
             function generateResult(){
                 const resultsBoard = document.createElement("article");
                 section.append(resultsBoard);
