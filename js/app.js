@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(e){
     const body = document.querySelector("body");
     const section = document.querySelector("section");
-    const articleLotto = document.getElementsByTagName("article")[0];
-    console.log(articleLotto);
-    const articleBalls = document.getElementsByTagName("article")[1];
+    const articleLotto = document.querySelector(".lotto");
+    const articleBalls = document.querySelector(".balls");
     const numbers = [];
     const balls = document.getElementsByClassName("ball");
     const drawnNums = [];
@@ -13,24 +12,24 @@ document.addEventListener("DOMContentLoaded", function(e){
         board.classList.add("board");
         articleLotto.append(board);
         for( let i = 0; i<number; i ++){
-            const div = document.createElement("div");
-            div.classList.add("boardDiv");
+            const div = document.createElement("button");
+            div.classList.add("boardEl");
             board.append(div);
         }
-        const boardDivs = document.getElementsByClassName("boardDiv");
-        for( let i =0; i<boardDivs.length; i++){
-            boardDivs[i].setAttribute("data-number", i+1);
-            const number = boardDivs[i].getAttribute("data-number");
+        const boardEls = document.getElementsByClassName("boardEl");
+        for( let i =0; i<boardEls.length; i++){
+            boardEls[i].setAttribute("data-number", i+1);
+            const number = boardEls[i].getAttribute("data-number");
             numbers.push(number);
-            boardDivs[i].textContent = number;
+            boardEls[i].textContent = number;
         }
     }
     createNumberBoard(49); //ten for now, we are checking how to eliminate the same -done! :)
 
     const board = document.querySelector(".board");
-    const boardDivs = document.querySelectorAll(".boardDiv");
+    const boardEls = document.querySelectorAll(".boardEl");
     function drawNumbers(){
-        boardDivs.forEach(boardDiv => boardDiv.addEventListener("click", selectNums));
+        boardEls.forEach(boardEl => boardEl.addEventListener("click", selectNums));
         function selectNums(){
             const number = parseInt(this.dataset.number, 10);
             if(this.hasAttribute("data-number")){
@@ -40,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function(e){
 
             } 
             if(drawnNums.length=== 6){
-                boardDivs.forEach( boardDiv => boardDiv.removeAttribute("data-number")); 
-                boardDivs.forEach(boardDiv => boardDiv.addEventListener("click", makeAlert));
+                boardEls.forEach( boardEl => boardEl.removeAttribute("data-number")); 
+                boardEls.forEach(boardEl => boardEl.addEventListener("click", makeAlert));
                 let startDraw = document.querySelector(".startDraw");
                 if(startDraw === null){ // you have to prevent creating the button if it is already there!
                     createButtonForMachineDraw();
@@ -70,11 +69,10 @@ document.addEventListener("DOMContentLoaded", function(e){
     }
 
     function machineDraw(){
-        const numbers = [];
-        for( let i =0; i<boardDivs.length; i++){
+        for( let i =0; i<boardEls.length; i++){
             numbers.push(i+1);
         }
-
+    
         for( let i =0; i<6; i++){
             const idx = Math.floor(Math.random() * numbers.length)
             chosenByMachine.push(numbers[idx]);
@@ -100,28 +98,12 @@ document.addEventListener("DOMContentLoaded", function(e){
     	
     }
 
-    function compareArrays(){
-            const tim1 = setTimeout(()=>{
-                balls[0].classList.remove("invisible");
-            }, 1000);
-            const tim2 = setTimeout(()=>{
-                balls[1].classList.remove("invisible");
-            }, 2000);
-            const tim3 = setTimeout(()=>{
-                balls[2].classList.remove("invisible");
-            }, 3000);
-            const tim4 = setTimeout(()=>{
-                balls[3].classList.remove("invisible");
-            }, 4000);
-            const tim5 = setTimeout(()=>{
-                balls[4].classList.remove("invisible");
-            }, 5000);
-            const tim6 = setTimeout(()=>{
-                balls[5].classList.remove("invisible");
-            }, 6000);
+    function compareArrays(){     
         for( let i =0; i<balls.length; i++){
-            //balls[i].classList.remove("invisible");
             balls[i].textContent = chosenByMachine[i];
+            setTimeout(()=>{
+                balls[i].classList.remove("invisible");
+            }, 1000*(i+1));
         }
         const common =[];
         const arr1 = chosenByMachine;
@@ -166,7 +148,6 @@ document.addEventListener("DOMContentLoaded", function(e){
     }
     
     function makeComebackBtn(){
-        console.log("make a button in the morning");
         const comebackBtn = document.createElement("a");
         comebackBtn.classList.add("comebackBtn");
         section.append(comebackBtn);

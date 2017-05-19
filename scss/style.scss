@@ -29,7 +29,7 @@ section {
 	border: 4px solid gold;
 	padding-bottom: 15px;
 }
-h1,h2 {
+h1,p {
 	width: 100%;
 	text-align: center;
 	margin-top: 10px;
@@ -42,7 +42,7 @@ h1,h2 {
 h1 {
 	font-size: 35px;
 }
-h2 {
+p {
 	font-size: 30px;
 }
 h3 {
@@ -83,14 +83,14 @@ article {
 
 }
 
-.boardDiv {
+.boardEl {
 	background-color: darken( #3366cc,20%);
 	width: 28px;
 	height: 28px;
 	color: #fefefe;
 	text-align: center;
 	font-size: 15px;
-	padding-top: 6px;
+	border: none;
 }
 
 .crossedOut {
@@ -116,7 +116,7 @@ article {
 	line-height: 35px;
 	color: #efefef;
 	font-weight: bold;
-	padding-left: 10px;
+	text-align: center;
 	transform: rotate(180deg);
 	&:nth-of-type(2n){
 		align-self: flex-end;
@@ -172,12 +172,18 @@ article {
 	border-left: none;
 	border-right: none;
 	text-align: center;
-	color:  #333366;
 	height: 80px;
-	width: 100%;
-	font-size: 30px;
-	//border: 2px solid white;
+	width: 100%;	
+	p {
+		color:  #333366;
+		font-size: 30px;
+		font-family: 'Allerta', sans-serif;
+		text-shadow: none;
+
+	}
 }
+
+
 
 .comebackBtn {
 	width: 100px;
