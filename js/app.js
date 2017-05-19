@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             } 
             if(drawnNums.length=== 6){
                 boardDivs.forEach( boardDiv => boardDiv.removeAttribute("data-number")); 
+                boardDivs.forEach(boardDiv => boardDiv.addEventListener("click", makeAlert));
                 let startDraw = document.querySelector(".startDraw");
                 if(startDraw === null){ // you have to prevent creating the button if it is already there!
                     createButtonForMachineDraw();
@@ -58,6 +59,16 @@ document.addEventListener("DOMContentLoaded", function(e){
     }
     drawNumbers();
 
+    function makeAlert() {
+    	const alertBox = document.createElement("div");
+    	board.append(alertBox);
+    	alertBox.classList.add("alertBox");
+    	alertBox.textContent = "you already chose 6!"
+    	const timeout = setTimeout(()=>{
+    		alertBox.parentNode.removeChild(alertBox);
+    	}, 1500);
+    }
+
     function machineDraw(){
         const numbers = [];
         for( let i =0; i<boardDivs.length; i++){
@@ -71,7 +82,9 @@ document.addEventListener("DOMContentLoaded", function(e){
 
         }
         const btnToRemove = document.querySelector(".startDraw");
-        btnToRemove.parentNode.removeChild(btnToRemove);
+        //btnToRemove.parentNode.removeChild(btnToRemove);
+        btnToRemove.classList.add("invisible"); 
+        /* why not remove it entirely? because it might then be accidentally created if for some reason you happen to try to click on board!!! and you may do that*/
         return chosenByMachine;
 
     }

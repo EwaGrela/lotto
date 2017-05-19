@@ -71,6 +71,7 @@ article {
 	display: none;
 }
 .board {
+	position: relative;
 	background-color: darken(gold, 10%);
 	width: 210px;
 	height: 210px;
@@ -189,4 +190,17 @@ article {
 	text-decoration: none;
 	color: #333366;
 	border: 3px solid darken(mix(hotpink, gold), 10%);
+}
+
+.alertBox {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	color: lighten(#333366, 10%);
+	background-color: gold;
+	text-align: center;
+	line-height: 210px;
+	border: 4px solid darken(gold, 20%);
 }
