@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", function(e){
         board.classList.add("board");
         articleLotto.append(board);
         for( let i = 0; i<number; i ++){
-            const div = document.createElement("button");
-            div.classList.add("boardEl");
-            board.append(div);
+            const boardEl = document.createElement("button");
+            boardEl.classList.add("boardEl");
+            board.append(boardEl);
         }
         const boardEls = document.getElementsByClassName("boardEl");
         for( let i =0; i<boardEls.length; i++){
@@ -76,6 +76,8 @@ document.addEventListener("DOMContentLoaded", function(e){
             /*a very important line of code which prevents machine from drawing the same number again 
              */
             numbers.splice(idx,1); 
+            console.log(numbers)
+            /*this line of code allows to check if numbers are taken out*/
         }
         const btnToRemove = document.querySelector(".startDraw");
         
