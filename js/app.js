@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function(e){
         const boardEls = document.getElementsByClassName("boardEl");
         for( let i =0; i<boardEls.length; i++){
             boardEls[i].setAttribute("data-number", i+1);
-            const number = boardEls[i].getAttribute("data-number");
+            const dataNumber = boardEls[i].getAttribute("data-number");
+            const number = parseInt(dataNumber, 10);
             numbers.push(number);
             boardEls[i].textContent = number;
         }
@@ -69,18 +70,15 @@ document.addEventListener("DOMContentLoaded", function(e){
     }
 
     function machineDraw(){
-        for( let i =0; i<boardEls.length; i++){
-            numbers.push(i+1);
-        }
-    
         for( let i =0; i<6; i++){
             const idx = Math.floor(Math.random() * numbers.length)
-            chosenByMachine.push(parseInt(numbers[idx], 10));
-            numbers.splice(idx,1);
-
+            chosenByMachine.push(numbers[idx]);
+            /*a very important line of code which prevents machine from drawing the same number again 
+             */
+            numbers.splice(idx,1); 
         }
         const btnToRemove = document.querySelector(".startDraw");
-        //btnToRemove.parentNode.removeChild(btnToRemove);
+        
         btnToRemove.classList.add("invisible"); 
         /* why not remove it entirely? because it might then be accidentally created if for some reason you happen to try to click on board!!! and you may do that*/
         return chosenByMachine;
@@ -115,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function(e){
                     }
                 }
             }
-            console.log(arr1, arr2, common);
+            console.log(arr1, arr2, common); /* you can monitor your arrays in console*/
             function generateResult(){
                 const resultsBoard = document.createElement("article");
                 section.append(resultsBoard);
