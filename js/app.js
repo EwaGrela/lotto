@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function(e) {
+    console.log("ok");
     const body = document.querySelector("body");
     const section = document.querySelector("section");
     const articleLotto = document.querySelector(".lotto");
+    const articleLottoHeader = articleLotto.querySelector("h3");
     const articleBalls = document.querySelector(".balls");
     const numbers = [];
     const balls = document.getElementsByClassName("ball");
@@ -55,25 +57,29 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 this.setAttribute("data-number", newNum);
                 this.classList.remove("crossedOut");
                 const indx = drawnNums.indexOf(trueNum);
-                if (indx > 0) {
+                if (indx >= 0) {
                     drawnNums.splice(indx, 1);
                 }
 
             }
             console.log(drawnNums, drawnNums.length);
-
-            if (drawnNums.length === 6) {
+            if (drawnNums.length < 6) {
+                let startDraw = document.querySelector(".startDraw");
+                if (startDraw !== null) {
+                    startDraw.classList.add("invisible");
+                }
+            } else if (drawnNums.length === 6) {
+                console.log("six numbers")
+                console.log(drawnNums, drawnNums.length);
                 let startDraw = document.querySelector(".startDraw");
                 if (startDraw === null) { // you have to prevent creating the button if it is already there!
                     createButtonForMachineDraw();
                 } else {
-                    return;
+                    //return;
+                    startDraw.classList.remove("invisible");
                 }
-
             }
-
         }
-
         return drawnNums;
 
     }
@@ -88,6 +94,28 @@ document.addEventListener("DOMContentLoaded", function(e) {
             alertBox.parentNode.removeChild(alertBox);
         }, 1500);
     }
+
+    function showMyNumbers() {
+        console.log(drawnNums);
+        articleLottoHeader.parentNode.removeChild(articleLottoHeader);
+        const newHeader = document.createElement("h3");
+        articleLotto.append(newHeader);
+        newHeader.textContent = "Your chosen numbers";
+        const numbersBoard = document.createElement("div");
+        articleLotto.append(numbersBoard);
+        numbersBoard.classList.add("numbersBoard");
+        for (let i = 0; i < drawnNums.length; i++) {
+            const numDiv = document.createElement("div");
+            numbersBoard.append(numDiv);
+            numDiv.textContent = drawnNums[i];
+        }
+    }
+
+    function removeTheBoard() {
+        board.parentNode.removeChild(board);
+    }
+
+
 
     function machineDraw() {
         for (let i = 0; i < 6; i++) {
@@ -113,6 +141,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
         startDraw.classList.add("startDraw");
         section.append(startDraw);
         startDraw.textContent = "release the balls";
+        startDraw.addEventListener("click", removeTheBoard);
+        startDraw.addEventListener("click", showMyNumbers);
         startDraw.addEventListener("click", machineDraw);
         startDraw.addEventListener("click", compareArrays);
 
@@ -143,6 +173,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
             resultsBoard.append(paragraph);
             resultsBoard.classList.add("resultsBoard");
             resultsBoard.classList.add("invisible");
+            console.log(arr2.length);
+
             if (common.length === 0) {
                 paragraph.textContent = "Oh, dear!  " + common.length + " balls and zero cash ";
             } else if (common.length > 0 && common.length < 3) {
@@ -156,11 +188,14 @@ document.addEventListener("DOMContentLoaded", function(e) {
             } else if (common.length === 6) {
                 paragraph.textContent = "A true winner " + common.length + " here's your million";
             }
+
+            setTimeout(() => {
+                makeComebackBtn();
+                document.querySelector(".resultsBoard").classList.remove("invisible"); //well, you cannot acces this outside the code
+            }, 8000)
         }
-        setTimeout(() => {
-            makeComebackBtn();
-            document.querySelector(".resultsBoard").classList.remove("invisible"); //well, you cannot acces this outside the code
-        }, 8000)
+
+
         generateResult();
     }
 
